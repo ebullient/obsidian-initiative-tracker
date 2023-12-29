@@ -98,12 +98,13 @@ creatures:
 - Goblin, friend
 - Goblin, 5, 15, 2, 25
 - 2: Goblin, 5, 15, 2, 25
+- 2: Goblin (FleeMortals), friend
 `;
         const params: EncounterParameters = parseYaml(encounter);
 
         const result = await parser.parse(params);
         expect(result).toHaveProperty('creatures');
-        expect(result.creatures.size).toBe(3); 
+        expect(result.creatures.size).toBe(4); 
 
         const k = result.creatures.keys();
 
@@ -133,6 +134,15 @@ creatures:
         expect(creature.modifier).toBe(2);
         expect(creature.friendly).toBe(false);
         expect(amount).toBe(3);
+
+        creature = k.next().value;
+        amount = result.creatures.get(creature);
+        expect(creature.name).toBe('Goblin (FleeMortals)');
+        expect(creature.hp).toBeUndefined();
+        expect(creature.ac).toBeUndefined();
+        expect(creature.modifier).toBe(0); // 0 is the default
+        expect(creature.friendly).toBe(true);
+        expect(amount).toBe(2);
     });
 
 

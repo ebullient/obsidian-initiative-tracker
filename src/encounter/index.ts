@@ -303,7 +303,7 @@ class EncounterComponent {
 }
 
 export class EncounterBlock extends MarkdownRenderChild {
-    parser = new EncounterParser(this.plugin);
+    parser: EncounterParser;
     constructor(
         public plugin: InitiativeTracker,
         public src: string,
@@ -311,6 +311,8 @@ export class EncounterBlock extends MarkdownRenderChild {
         public table = false
     ) {
         super(containerEl);
+        this.plugin = plugin;
+        this.parser = new EncounterParser(this.plugin);
         this.init();
     }
     init(): void {
